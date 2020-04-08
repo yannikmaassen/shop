@@ -9,10 +9,12 @@ use App\Product;
 
 class CategoryController extends \App\Http\Controllers\Controller
 {
-    public function showOne($id)
+    public function show(Category $category)
     {
         $products = \App\Product::all();
-        $category = \App\Category::findOrFail($id);
-        return view('frontend/categories/show', ['category' => $category, 'products' => $products]);
+        return view('frontend/categories/show', [
+            'category' => $category,
+            'products' => $products
+        ]);
     }
 }

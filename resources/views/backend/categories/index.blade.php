@@ -48,7 +48,7 @@
                       <td>32.99 €</td>
                       <td>34.99 €</td>
                       <td>61</td>
-                      <td><a href="#" class="btn btn-primary btn-sm w-100">Edit</a></td>
+                      <td><a href="{{ url('/admin/categories/edit') }}" class="btn btn-primary btn-sm w-100">Edit</a></td>
                       </tr>
                       @endfor
                   </tbody>

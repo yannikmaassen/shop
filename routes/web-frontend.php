@@ -27,10 +27,16 @@ Route::get('/products', function () {
     ]);
 });
 
-Route::get('/categories/{id}', 'CategoryController@showOne');
+Route::get('/categories', function () {
+    return view('frontend/categories', [
+        'categories' => App\Category::all(),
+    ]);
+});
+
+Route::get('/categories/{category}', 'CategoryController@show');
 
 
-Route::get('/products/{id}', 'ProductController@showOne');
+Route::get('/products/{product}', 'ProductController@show');
 
 Route::get('/cart', function () {
     return view('frontend/cart');

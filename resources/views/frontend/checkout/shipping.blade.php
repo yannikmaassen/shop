@@ -85,7 +85,7 @@
         <hr class="mb-4">
         <div class="d-flex justify-content-between">
           <a href="/cart" class="btn btn-light">Back</a>
-          <button class="btn btn-primary" type="submit">Continue</button>
+          <a href="{{ url('/checkout/payment/') }}" class="btn btn-primary">Continue</a>
         </div>
       </form>
     </div>
