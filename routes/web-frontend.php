@@ -12,18 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// FRONTEND ROUTES
 
 Route::get('/', function () {
     return view('frontend/home', [
         'products' => App\Product::take(4)->get(),
         'categories' => App\Category::all(),
-    ]);
-});
-
-Route::get('/admin', function () {
-    return view('backend/home', [
-        'productsCount' => App\Product::count(),
-        'categoriesCount' => App\Category::count(),
     ]);
 });
 
@@ -33,7 +27,22 @@ Route::get('/products', function () {
     ]);
 });
 
+Route::get('/categories/{id}', 'CategoryController@showOne');
 
+
+Route::get('/products/{id}', 'ProductController@showOne');
+
+Route::get('/cart', function () {
+    return view('frontend/cart');
+});
+
+Route::get('/checkout/shipping', function () {
+    return view('frontend/checkout/shipping');
+});
+
+Route::get('/checkout/payment', function () {
+    return view('frontend/checkout/payment');
+});
 
 // Route::get('/products', function () use ($products) {
 //     return view('products', ['products' => $products]);
