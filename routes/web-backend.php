@@ -15,67 +15,63 @@ use Illuminate\Support\Facades\Route;
 
 // BACKEND ROUTES
 
-Route::get('/admin', function () {
-    return view('backend/home', [
-        'productsCount' => App\Product::count(),
-        'categoriesCount' => App\Category::count(),
-    ]);
-});
 
-Route::get('/admin/products', function () {
-    return view('backend/products/index', [
-        'productsCount' => App\Product::count(),
-        'categoriesCount' => App\Category::count(),
-    ]);
-});
 
-Route::get('/admin/products/create', function () {
-    return view('backend/products/create');
-});
+Route::prefix('admin')->name('admin.')->group(function () {
 
-Route::get('/admin/products/edit', function () {
-    return view('backend/products/edit');
-});
+    Route::get('/', function () {
+        return view('backend/home', [
+            'productsCount' => App\Product::count(),
+            'categoriesCount' => App\Category::count(),
+        ]);
+    });
 
-Route::get('/admin/categories', function () {
-    return view('backend/categories/index', [
-        'productsCount' => App\Product::count(),
-        'categoriesCount' => App\Category::count(),
-    ]);
-});
+    Route::resource('/products', 'ProductController');
 
-Route::get('/admin/categories/create', function () {
-    return view('backend/categories/create');
-});
+    Route::get('/products/edit', function () {
+        return view('backend/products/edit');
+    });
 
-Route::get('/admin/categories/edit', function () {
-    return view('backend/categories/edit');
-});
+    Route::get('/categories', function () {
+        return view('backend/categories/index', [
+            'productsCount' => App\Product::count(),
+            'categoriesCount' => App\Category::count(),
+        ]);
+    });
 
-Route::get('/admin/orders', function () {
-    return view('backend/orders/index', [
-        'productsCount' => App\Product::count(),
-        'categoriesCount' => App\Category::count(),
-    ]);
-});
+    Route::get('/categories/create', function () {
+        return view('backend/categories/create');
+    });
 
-Route::get('/admin/orders/show', function () {       //TODO
-    return view('backend/orders/show');
-});
+    Route::get('/categories/edit', function () {
+        return view('backend/categories/edit');
+    });
 
-Route::get('/admin/users', function () {
-    return view('backend/users/index', [
-        'productsCount' => App\Product::count(),
-        'categoriesCount' => App\Category::count(),
-    ]);
-});
+    Route::get('/orders', function () {
+        return view('backend/orders/index', [
+            'productsCount' => App\Product::count(),
+            'categoriesCount' => App\Category::count(),
+        ]);
+    });
 
-Route::get('/admin/users/create', function () {
-    return view('backend/users/create');
-});
+    Route::get('/orders/show', function () {       //TODO
+        return view('backend/orders/show');
+    });
 
-Route::get('/admin/users/edit', function () {
-    return view('backend/users/edit');
+    Route::get('/users', function () {
+        return view('backend/users/index', [
+            'productsCount' => App\Product::count(),
+            'categoriesCount' => App\Category::count(),
+        ]);
+    });
+
+    Route::get('/users/create', function () {
+        return view('backend/users/create');
+    });
+
+    Route::get('/users/edit', function () {
+        return view('backend/users/edit');
+    });
 });
 
 // Route::get('/products', function () use ($products) {

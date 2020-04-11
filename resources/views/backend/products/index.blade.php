@@ -18,7 +18,7 @@
           <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
             <div class="row">
               <div class="col-sm-12 col-md-6">
-                <a href="#" class="btn btn-primary btn-sm">Add</a>
+                <a href="{{ route('admin.products.create') }}" class="btn btn-primary btn-sm">Add</a>
               </div>
               <div class="col-sm-12 col-md-6">
                 <div id="sampleTable_filter" class="dataTables_filter pt-2">
@@ -41,16 +41,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @for($i=0; $i<10; $i++) <tr>
-                      <td>1</td>
-                      <td>Product Name</td>
-                      <td>Lorem ipsum dolor sit amet...</td>
-                      <td>32.99 €</td>
-                      <td>34.99 €</td>
-                      <td>61</td>
-                      <td><a href="{{ url('/admin/products/edit') }}" class="btn btn-primary btn-sm w-100">Edit</a></td>
-                      </tr>
-                      @endfor
+                    @foreach($products as $product)
+                    <tr>
+                      <td>{{ $product->id }}</td>
+                      <td>{{ $product->name }}</td>
+                      <td>{{ $product->description }}</td>
+                      <td>{{ $product->price }} €</td>
+                      <td>{{ $product->msrp }} €</td>
+                      <td>{{ $product->stock }}</td>
+                      <td><a href="{{ route('admin.products.edit', $product) }}" class="btn btn-primary btn-sm w-100">Edit</a></td>
+                    </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
