@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Category;
+use App\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        $categories = Category::all();
+        return view('backend/categories/index', [
+            'categories' => $categories,
+            'products' => $products
+        ]);
     }
 
     /**
@@ -25,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend/categories/create');
     }
 
     /**
@@ -58,7 +64,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('backend/categories/edit');
     }
 
     /**

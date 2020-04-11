@@ -27,16 +27,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::resource('/products', 'ProductController');
+    Route::resource('/categories', 'CategoryController');
 
     Route::get('/products/edit', function () {
         return view('backend/products/edit');
-    });
-
-    Route::get('/categories', function () {
-        return view('backend/categories/index', [
-            'productsCount' => App\Product::count(),
-            'categoriesCount' => App\Category::count(),
-        ]);
     });
 
     Route::get('/categories/create', function () {
@@ -46,6 +40,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/categories/edit', function () {
         return view('backend/categories/edit');
     });
+
+    // --------------------
 
     Route::get('/orders', function () {
         return view('backend/orders/index', [

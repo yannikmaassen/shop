@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="tile-footer">
-      <a class="btn btn-secondary" href="#">Cancel</a>
+      <a class="btn btn-secondary" href="{{ url('admin/categories') }}">Cancel</a>
       <button class="btn btn-primary pull-right ml-2" type="submit">Save</button>
     </div>
   </form>
