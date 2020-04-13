@@ -29,17 +29,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('/products', 'ProductController');
     Route::resource('/categories', 'CategoryController');
 
-    Route::get('/products/edit', function () {
-        return view('backend/products/edit');
-    });
+    // Route::get('/products/edit', function () {
+    //     return view('backend/products/edit');
+    // });
 
-    Route::get('/categories/create', function () {
-        return view('backend/categories/create');
-    });
+    // Route::get('/categories/create', function () {
+    //     return view('backend/categories/create');
+    // });
 
-    Route::get('/categories/edit', function () {
-        return view('backend/categories/edit');
-    });
+    // Route::get('/categories/edit', function () {
+    //     return view('backend/categories/edit');
+    // });
 
     // --------------------
 
@@ -50,7 +50,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         ]);
     });
 
-    Route::get('/orders/show', function () {       //TODO
+    Route::get('/orders/show', function () {
         return view('backend/orders/show');
     });
 

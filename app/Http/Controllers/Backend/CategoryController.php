@@ -16,11 +16,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        $categories = Category::all();
+        // $products = Product::all();
         return view('backend/categories/index', [
-            'categories' => $categories,
-            'products' => $products
+            'categories' => Category::all(),
+            // 'products' => $products
         ]);
     }
 
@@ -42,7 +41,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Category::create($this->validateData());
+
+        return redirect('admin/categories');
     }
 
     /**
@@ -53,7 +54,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return view('backend/categories/index');
     }
 
     /**
@@ -64,7 +65,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('backend/categories/edit');
+        return view('backend/categories/edit', ['categories' => $category]);
     }
 
     /**
@@ -76,7 +77,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->update($this->validateData());
+
+        return redirect('admin/categories');
     }
 
     /**
@@ -87,6 +90,14 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect('admin/categories');
+    }
+
+    private function validateData()
+    {
+        return request()->validate([
+            'name' => ['required', 'min:3'],
+        ]);
     }
 }
