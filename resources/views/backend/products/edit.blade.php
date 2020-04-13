@@ -7,8 +7,8 @@
       <h1>Edit</h1>
     </div>
     <ul class="app-breadcrumb breadcrumb side">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Products</a></li>
+      <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('admin.products.index') }}">Products</a></li>
       <li class="breadcrumb-item">Edit</li>
     </ul>
   </div>
@@ -21,23 +21,38 @@
         <div class="col-md-8">
           <div class="form-group">
             <label class="control-label">Name</label>
-            <input class="form-control" type="text" name="name" value="{{ old('name') ?? $products->name }}">
+            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') ?? $products->name }}">
+            @error('name')
+            <p>{{ $errors->first('name') }}</p>
+            @enderror
           </div>
           <div class="form-group">
             <label class="control-label">Description</label>
-            <textarea class="form-control" rows="3" type="text" name="description">{{ old('description') ?? $products->description }}</textarea>
+            <textarea class="form-control @error('description') is-invalid @enderror" rows="3" type="text" name="description">{{ old('description') ?? $products->description }}</textarea>
+            @error('description')
+            <p>{{ $errors->first('description') }}</p>
+            @enderror
           </div>
           <div class="form-group">
             <label class="control-label">Price</label>
-            <input class="form-control" type="text" name="price" value="{{ old('price') ?? $products->price }}">
+            <input class="form-control @error('price') is-invalid @enderror" type="text" name="price" value="{{ old('price') ?? $products->price }}">
+            @error('price')
+            <p>{{ $errors->first('price') }}</p>
+            @enderror
           </div>
           <div class="form-group">
             <label class="control-label">MSRP</label>
-            <input class="form-control" type="text" name="msrp" value="{{ old('msrp') ?? $products->msrp }}">
+            <input class="form-control @error('msrp') is-invalid @enderror" type="text" name="msrp" value="{{ old('msrp') ?? $products->msrp }}">
+            @error('msrp')
+            <p>{{ $errors->first('msrp') }}</p>
+            @enderror
           </div>
           <div class="form-group">
             <label class="control-label">Stock</label>
-            <input class="form-control" type="text" name="stock" value="{{ old('stock') ?? $products->stock }}">
+            <input class="form-control @error('stock') is-invalid @enderror" type="text" name="stock" value="{{ old('stock') ?? $products->stock }}">
+            @error('stock')
+            <p>{{ $errors->first('stock') }}</p>
+            @enderror
           </div>
         </div>
         <div class="col-md-4">
@@ -52,14 +67,14 @@
       </div>
     </div>
     <div class="tile-footer">
-      <a class="btn btn-secondary" href="#">Cancel</a>
+      <a class="btn btn-secondary" href="{{ route('admin.products.index') }}">Cancel</a>
       <button class="btn btn-primary pull-right ml-2" type="submit">Save</button>
-      <form method="POST" action="{{ route('admin.products.destroy', $products) }}">
-        @csrf
-        @method('DELETE')
-        <button class="btn btn-danger pull-right" href="#">Delete</button>
-      </form>
-    </div>
   </form>
+  <form method="POST" action="{{ route('admin.products.destroy', $products) }}">
+    @csrf
+    @method('DELETE')
+    <button class="btn btn-danger pull-right" href="{{ route('admin.products.index') }}">Delete</button>
+  </form>
+  </div>
 </main>
 @endsection

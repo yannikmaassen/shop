@@ -33,23 +33,14 @@
                     <tr>
                       <th>ID</th>
                       <th>Name</th>
-                      <th>Description</th>
-                      <th>Price</th>
-                      <th>MSRP</th>
-                      <th>Stock</th>
-                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach($categories as $category)
                     <tr>
-                      <td>{{ $product->id }}</td>
-                      <td>{{ $product->name }}</td>
-                      <td>{{ $product->description }}</td>
-                      <td>{{ $product->price }} €</td>
-                      <td>{{ $product->msrp }} €</td>
-                      <td>{{ $product->stock }}</td>
-                      <td><a href="{{ url('admin/categories/edit') }}" class="btn btn-primary btn-sm w-100">Edit</a></td>
+                      <td>{{ $category->id }}</td>
+                      <td>{{ $category->name }}</td>
+                      <td><a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-primary btn-sm w-100">Edit</a></td>
                     </tr>
                     @endforeach
                   </tbody>

@@ -7,8 +7,8 @@
       <h1>Create</h1>
     </div>
     <ul class="app-breadcrumb breadcrumb side">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Products</a></li>
+      <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('admin.products.index') }}">Products</a></li>
       <li class="breadcrumb-item">Create</li>
     </ul>
   </div>
