@@ -11,7 +11,8 @@ class CategoryController extends \App\Http\Controllers\Controller
 {
     public function show(Category $category)
     {
-        $products = \App\Product::all();
+        $products = Product::paginate(10);
+
         return view('frontend/categories/show', [
             'category' => $category,
             'products' => $products

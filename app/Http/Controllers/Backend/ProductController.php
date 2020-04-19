@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         return view('backend/products/index', [
-            'products' => Product::all()
+            'products' => Product::paginate(10)
         ]);
     }
 
@@ -38,17 +38,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $product = new Product();
-        // $product->name = $validatedData['name'];
-        // $product->description = $validatedData['description'];
-        // $product->price = $validatedData['price'];
-        // $product->msrp = $validatedData['msrp'];
-        // $product->stock = $validatedData['stock'];
-        // $product->save();
+        Product::create($this->validateData());
 
-        Product::create($this->validateData());        // should be the same as all the lines above
-
-        return redirect('admin/products');
+        return redirect()->route('admin.products.index');
     }
 
     /**
@@ -59,7 +51,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('backend/products/index');
+        return redirect()->route('admin.products.edit', $product);
     }
 
     /**
@@ -70,7 +62,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('backend/products/edit', ['products' => $product]);
+        return view('backend/products/edit', [
+            'product' => $product
+        ]);
     }
 
     /**
@@ -84,7 +78,7 @@ class ProductController extends Controller
     {
         $product->update($this->validateData());
 
-        return redirect('admin/products');
+        return redirect()->route('admin.products.index');
     }
 
     /**
@@ -97,15 +91,15 @@ class ProductController extends Controller
     {
         $product->delete();
 
-        return redirect('admin/products');
+        return redirect()->route('admin.products.index');
     }
 
     private function validateData()
     {
         return request()->validate([
-            'name' => ['required', 'min:3'],
+            'name' => 'required|min:3',
             'price' => 'required|numeric|between:0,9999.99',
-            'description' => 'required|min:20',
+            'description' => 'required|min:3',
             'msrp' => 'numeric|between:0,9999.99',
             'stock' => 'integer'
         ]);

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Category;
-use App\Product;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class CategoryController extends \App\Http\Controllers\Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // $products = Product::all();
         return view('backend/categories/index', [
-            'categories' => Category::all(),
-            // 'products' => $products
+            'categories' => Category::paginate(5)
         ]);
     }
 
@@ -43,7 +39,7 @@ class CategoryController extends Controller
     {
         Category::create($this->validateData());
 
-        return redirect('admin/categories');
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -54,7 +50,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('backend/categories/index');
+        return redirect()->route('admin.categories.edit', $category);
     }
 
     /**
@@ -65,7 +61,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('backend/categories/edit', ['categories' => $category]);
+        return view('backend/categories/edit', [
+            'category' => $category
+        ]);
     }
 
     /**
@@ -79,7 +77,7 @@ class CategoryController extends Controller
     {
         $category->update($this->validateData());
 
-        return redirect('admin/categories');
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -91,13 +89,14 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect('admin/categories');
+
+        return redirect()->route('admin.categories.index');
     }
 
-    private function validateData()
+    public function validateData()
     {
         return request()->validate([
-            'name' => ['required', 'min:3'],
+            'name' => ['required', 'min:3']
         ]);
     }
 }
