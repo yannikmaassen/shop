@@ -20,9 +20,21 @@
         <div class="col-md-8">
           <div class="form-group">
             <label class="control-label">Name</label>
-            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') }}">
+            <input class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" type="text">
             @error('name')
-            <p>{{ $errors->first('name') }}</p>
+            <p class="invalid-feedback">{{ $errors->first('name') }}</p>
+            @enderror
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Products</label>
+            <select multiple autocomplete="off" class="form-control @error('products') is-invalid @enderror" name="products[]" size="20">
+              @foreach ($products as $product)
+              <option value="{{ $product->id }}">{{ $product->name }}</option>
+              @endforeach
+            </select>
+            @error('products')
+            <p class="invalid-feedback">{{ $errors->first('products') }}</p>
             @enderror
           </div>
           <!-- <div class="form-group">

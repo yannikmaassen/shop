@@ -12,7 +12,7 @@
       <li class="breadcrumb-item">Edit</li>
     </ul>
   </div>
-  <form method="POST" action="{{ route('admin.categories.update', $categories) }}" class="tile">
+  <form method="POST" action="{{ route('admin.categories.update', $category->id) }}" class="tile">
     @csrf
     @method('PUT')
 
@@ -21,9 +21,22 @@
         <div class="col-md-8">
           <div class="form-group">
             <label class="control-label">Name</label>
-            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') ?? $categories->name }}">
+            <input class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $category->name }}" type="text">
             @error('name')
-            <p>{{ $errors->first('name') }}</p>
+            <p class="invalid-feedback">{{ $errors->first('name') }}</p>
+            @enderror
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Products</label>
+            <select multiple autocomplete="off" class="form-control @error('products') is-invalid @enderror" name="products[]" size="20">
+              @foreach ($products as $product)
+              <option @if($selectedProducts->contains($product)) selected @endif
+                value="{{ $product->id }}">{{ $product->name }}</option>
+              @endforeach
+            </select>
+            @error('products')
+            <p class="invalid-feedback">{{ $errors->first('products') }}</p>
             @enderror
           </div>
           <!-- <div class="form-group">
@@ -59,7 +72,7 @@
         <button class="btn btn-primary pull-right ml-2" type="submit">Save</button>
       </div>
   </form>
-  <form method="POST" action="{{ route('admin.categories.destroy', $categories) }}">
+  <form method="POST" action="{{ route('admin.categories.destroy', $category->id) }}">
     @csrf
     @method('DELETE')
 
