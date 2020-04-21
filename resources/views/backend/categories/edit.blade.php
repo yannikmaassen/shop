@@ -39,23 +39,6 @@
             <p class="invalid-feedback">{{ $errors->first('products') }}</p>
             @enderror
           </div>
-          <!-- <div class="form-group">
-            <label class="control-label">Description</label>
-            <textarea class="form-control" rows="3"></textarea>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Price</label>
-            <input class="form-control" type="text">
-          </div>
-          <div class="form-group">
-            <label class="control-label">MSRP</label>
-            <input class="form-control" type="text">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Stock</label>
-            <input class="form-control" type="text">
-          </div>
-        </div> -->
           <div class="col-md-4">
             <div class="form-group">
               <label class="control-label">Image</label>
