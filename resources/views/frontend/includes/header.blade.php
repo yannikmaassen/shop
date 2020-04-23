@@ -15,11 +15,12 @@
         <a class="py-2 pr-3 d-md-inline-block text-white" href="{{ url('categories/' . $category->id) }}">{{ $category->name }}</a>
         @endforeach
       </nav>
-      <form class="form-inline my-2 my-lg-0">
+      <form class="form-inline my-2 my-lg-0" method="GET" action="{{ url('/search') }}">
+        @csrf
         <div class="input-group input-group-sm">
-          <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Your query...">
+          <input name="q" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Your query...">
           <div class="input-group-append">
-            <button type="button" class="btn btn-secondary btn-number">
+            <button type="submit" class="btn btn-secondary btn-number" href="{{ url('/search') }}">
               Search
             </button>
           </div>

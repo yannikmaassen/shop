@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 // BACKEND ROUTES
 
+Auth::routes();
 
-
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     Route::get('/', function () {
         return view('backend/home', [
@@ -28,20 +29,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('/products', 'ProductController');
     Route::resource('/categories', 'CategoryController');
-
-    // Route::get('/products/edit', function () {
-    //     return view('backend/products/edit');
-    // });
-
-    // Route::get('/categories/create', function () {
-    //     return view('backend/categories/create');
-    // });
-
-    // Route::get('/categories/edit', function () {
-    //     return view('backend/categories/edit');
-    // });
-
-    // --------------------
 
     Route::get('/orders', function () {
         return view('backend/orders/index', [
@@ -69,15 +56,3 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return view('backend/users/edit');
     });
 });
-
-// Route::get('/products', function () use ($products) {
-//     return view('products', ['products' => $products]);
-// });
-
-// Route::get('/products/{id}', function ($id) use ($products) {
-//     if (array_key_exists($id, $products)) {
-//         return $products[$id];
-//     }
-
-//     abort(404, 'Product not found');
-// });
