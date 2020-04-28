@@ -84,7 +84,7 @@
         </div>
         <hr class="mb-4">
         <div class="d-flex justify-content-between">
-          <a href="{{ route('cart') }}" class="btn btn-light">Back</a>
+          <a href="{{ url('/cart') }}" class="btn btn-light">Back</a>
           <a href="{{ url('/checkout/payment/') }}" class="btn btn-primary">Continue</a>
         </div>
       </form>

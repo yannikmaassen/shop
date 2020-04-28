@@ -3,20 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
-    public $fillable = ['name', 'description', 'price', 'msrp', 'stock', 'image'];
+    protected $fillable = ['name', 'price', 'description', 'msrp', 'stock', 'image'];
 
     public function categories()
     {
         return $this->belongsToMany('App\Category');
     }
 
-    public function imageUrl()
+    public function getImageAttribute($value)
     {
-        if ($this->image) {
-            return \Storage::url($this->image);
+        if ($value) {
+            return Storage::url($value);
         }
 
         return 'https://via.placeholder.com/500';

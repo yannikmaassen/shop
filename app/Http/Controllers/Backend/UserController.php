@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Backend;
 
-use Illuminate\Http\Request;
-use App\Category;
-use App\Product;
+use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class UserController extends \App\Http\Controllers\Controller
+class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,10 +21,9 @@ class UserController extends \App\Http\Controllers\Controller
      */
     public function index()
     {
-        $users = User::paginate(3);
-        return view('backend/users/index', [
-            'users' => $users
-        ]);
+        $users = User::paginate(10);
+
+        return view('backend/users/index', ['users' => $users]);
     }
 
     /**
@@ -40,26 +44,31 @@ class UserController extends \App\Http\Controllers\Controller
      */
     public function store(Request $request)
     {
+        $data = $this->validateData();
+        $data['password'] = Hash::make($request->input('password'));
+        User::create($data);
+
+        return redirect('admin/users');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        return redirect()->route('admin.users.index');
+        return view('backend/users/show', ['user' => $user]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(user $user)
+    public function edit(User $user)
     {
         return view('backend/users/edit', ['user' => $user]);
     }
@@ -68,22 +77,38 @@ class UserController extends \App\Http\Controllers\Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $data = $this->validateData();
+        $data['password'] = Hash::make($request->input('password'));
+        $user->update($data);
+
+        return redirect('admin/users');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect('admin/users');
+    }
+
+    // Helper method
+    public function validateData()
+    {
+        return request()->validate([
+            'name' => ['required', 'min:3'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'min:4']
+        ]);
     }
 }

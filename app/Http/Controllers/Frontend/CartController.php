@@ -8,7 +8,7 @@ use App\Product;
 
 class CartController extends Controller
 {
-    public function show()
+    public function cart()
     {
         $cart = session()->get('cart', []);
 
