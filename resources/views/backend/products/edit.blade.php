@@ -12,7 +12,7 @@
       <li class="breadcrumb-item">Edit</li>
     </ul>
   </div>
-  <form method="POST" action="{{ route('admin.products.update', $products) }}" class="tile">
+  <form method="POST" action="{{ route('admin.products.update', $product) }}" class="tile" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -21,35 +21,35 @@
         <div class="col-md-8">
           <div class="form-group">
             <label class="control-label">Name</label>
-            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') ?? $products->name }}">
+            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') ?? $product->name }}">
             @error('name')
             <p>{{ $errors->first('name') }}</p>
             @enderror
           </div>
           <div class="form-group">
             <label class="control-label">Description</label>
-            <textarea class="form-control @error('description') is-invalid @enderror" rows="3" type="text" name="description">{{ old('description') ?? $products->description }}</textarea>
+            <textarea class="form-control @error('description') is-invalid @enderror" rows="3" type="text" name="description">{{ old('description') ?? $product->description }}</textarea>
             @error('description')
             <p>{{ $errors->first('description') }}</p>
             @enderror
           </div>
           <div class="form-group">
             <label class="control-label">Price</label>
-            <input class="form-control @error('price') is-invalid @enderror" type="text" name="price" value="{{ old('price') ?? $products->price }}">
+            <input class="form-control @error('price') is-invalid @enderror" type="text" name="price" value="{{ old('price') ?? $product->price }}">
             @error('price')
             <p>{{ $errors->first('price') }}</p>
             @enderror
           </div>
           <div class="form-group">
             <label class="control-label">MSRP</label>
-            <input class="form-control @error('msrp') is-invalid @enderror" type="text" name="msrp" value="{{ old('msrp') ?? $products->msrp }}">
+            <input class="form-control @error('msrp') is-invalid @enderror" type="text" name="msrp" value="{{ old('msrp') ?? $product->msrp }}">
             @error('msrp')
             <p>{{ $errors->first('msrp') }}</p>
             @enderror
           </div>
           <div class="form-group">
             <label class="control-label">Stock</label>
-            <input class="form-control @error('stock') is-invalid @enderror" type="text" name="stock" value="{{ old('stock') ?? $products->stock }}">
+            <input class="form-control @error('stock') is-invalid @enderror" type="text" name="stock" value="{{ old('stock') ?? $product->stock }}">
             @error('stock')
             <p>{{ $errors->first('stock') }}</p>
             @enderror
@@ -58,9 +58,12 @@
         <div class="col-md-4">
           <div class="form-group">
             <label class="control-label">Image</label>
-            <div class="form-control py-3">
-              <img class="w-100 mb-3" src="https://via.placeholder.com/150" />
-              <input type="file">
+            <div class="form-control py-3 @error('image') is-invalid @enderror">
+              <img class="w-100 mb-3" src="{{ $product->imageUrl() }}" />
+              <input type="file" name="image">
+              @error('image')
+              <p class="invalid-feedback">{{ $errors->first('image') }}</p>
+              @enderror
             </div>
           </div>
         </div>
@@ -70,7 +73,7 @@
       <a class="btn btn-secondary" href="{{ route('admin.products.index') }}">Cancel</a>
       <button class="btn btn-primary pull-right ml-2" type="submit">Save</button>
   </form>
-  <form method="POST" action="{{ route('admin.products.destroy', $products) }}">
+  <form method="POST" action="{{ route('admin.products.destroy', $product) }}">
     @csrf
     @method('DELETE')
     <button class="btn btn-danger pull-right" href="{{ route('admin.products.index') }}">Delete</button>

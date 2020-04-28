@@ -24,35 +24,13 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         return view('backend/home', [
             'productsCount' => App\Product::count(),
             'categoriesCount' => App\Category::count(),
+            'ordersCount' => App\Order::count(),
+            'usersCount' => App\User::count(),
         ]);
     })->name('home');
 
     Route::resource('/products', 'ProductController');
     Route::resource('/categories', 'CategoryController');
-
-    Route::get('/orders', function () {
-        return view('backend/orders/index', [
-            'productsCount' => App\Product::count(),
-            'categoriesCount' => App\Category::count(),
-        ]);
-    });
-
-    Route::get('/orders/show', function () {
-        return view('backend/orders/show');
-    });
-
-    Route::get('/users', function () {
-        return view('backend/users/index', [
-            'productsCount' => App\Product::count(),
-            'categoriesCount' => App\Category::count(),
-        ]);
-    });
-
-    Route::get('/users/create', function () {
-        return view('backend/users/create');
-    });
-
-    Route::get('/users/edit', function () {
-        return view('backend/users/edit');
-    });
+    Route::resource('/orders', 'OrderController')->only(['index', 'show']);
+    Route::resource('/users', 'UserController');
 });

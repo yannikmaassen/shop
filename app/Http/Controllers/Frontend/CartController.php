@@ -8,67 +8,64 @@ use App\Product;
 
 class CartController extends Controller
 {
-    public function addToCart(Request $request)
+    public function show()
     {
-        // validate input
+        $cart = session()->get('cart', []);
+
+        // find products from cart
+        $ids = array_keys($cart);
+        $products = Product::find($ids)->toArray();
+
+        // calculate total... 
+        $total = 0;
+        foreach ($products as $index => $product) {
+            $qty = $cart[$product['id']];
+            $total += $product['price'] * $qty;
+
+            // ... and set qty
+            $products[$index]['qty'] = $qty;
+        }
+
+        return view('frontend/cart', [
+            'products' => $products,
+            'total' => $total
+        ]);
+    }
+
+    public function addToCart(Request $request, bool $update = false)
+    {
+        $cart = session()->get('cart', []);
         $data = $request->validate([
             'id' => 'required|integer',
             'qty' => 'required|integer'
         ]);
-
-        // get cart from session
-        $cart = [];
-        if (session()->has('cart')) {
-            $cart = session()->get('cart');
-        }
-
-        // add product to cart
         $id = (int) $data['id'];
         $qty = (int) $data['qty'];
-        if (isset($cart[$id])) {
-            $cart[$id] += $qty;
-        } else {
+
+        // update or set qty
+        if (!isset($cart[$id]) || $update) {
             $cart[$id] = $qty;
+        } else {
+            $cart[$id] += $qty;
         }
 
-        // put cart into session
         session()->put('cart', $cart);
 
-        // redirect to cart view
         return redirect('/cart');
     }
 
-    public function cart()
+    public function updateCart(Request $request)
     {
-        $id = session()->get('cart');
-        $products = \App\Product::find(array_keys($id));
-
-        // if ($id === null) {
-        //     echo 'Der Warenkorb ist nicht gefüllt.';
-        // }
-
-        return view('frontend/cart', [
-            'products' => $products,
-            // 'product_qty' => $product_qty
-
-        ]);
+        return $this->addToCart($request, true);
     }
 
-
-    // public function cart()
-    // {
-    //     $ids = session()->array_keys();
-    //     $products = \App\Product::find($ids)->toArray();
-    //     return view('frontend/cart', [
-    //         'products' => $products
-    //     ]);
-    // }
-
-    public function updateCart()
+    public function removeFromCart(Request $request)
     {
-    }
+        $cart = session()->get('cart', []);
 
-    public function removeFromCart()
-    {
+        unset($cart[$request->input('id')]);
+        session()->put('cart', $cart);
+
+        return redirect('/cart');
     }
 }

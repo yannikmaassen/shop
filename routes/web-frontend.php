@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 // FRONTEND ROUTES
 
 Route::get('/', function () {
+    // $cartAmount = session()->has('cart') ? count(session()->get('cart')) : 0;
     return view('frontend/home', [
         'products' => App\Product::take(4)->get(),
         'categories' => App\Category::all(),
+        // 'cartAmount' => $cartAmount
     ]);
 });
 
@@ -45,13 +47,13 @@ Route::delete('/cart/remove', 'CartController@removeFromCart');
 
 Route::get('/search', 'SearchController@index')->name('search');
 
-Route::get('/checkout/shipping', function () {
-    return view('frontend/checkout/shipping');
-});
+Route::get('/checkout/shipping',    'CheckoutController@shipping');
+Route::post('/checkout/shipping',   'CheckoutController@setShippingAddress');
+Route::get('/checkout/payment',     'CheckoutController@payment');
+Route::get('/checkout/success',     'CheckoutController@success');
+Route::get('/checkout/fail',        'CheckoutController@fail');
 
-Route::get('/checkout/payment', function () {
-    return view('frontend/checkout/payment');
-});
+
 
 // Route::get('/products', function () use ($products) {
 //     return view('products', ['products' => $products]);

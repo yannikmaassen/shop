@@ -7,7 +7,7 @@
       <h1>Create</h1>
     </div>
     <ul class="app-breadcrumb breadcrumb side">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
       <li class="breadcrumb-item"><a href="#">Users</a></li>
       <li class="breadcrumb-item">Create</li>
     </ul>
@@ -26,14 +26,6 @@
           </div>
           <div class="form-group">
             <label class="control-label">Price</label>
-            <input class="form-control" type="text">
-          </div>
-          <div class="form-group">
-            <label class="control-label">MSRP</label>
-            <input class="form-control" type="text">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Stock</label>
             <input class="form-control" type="text">
           </div>
         </div>
