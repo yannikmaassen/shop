@@ -5,7 +5,7 @@
     </a>
     <a class="btn" href="{{ url('/cart') }}">
       Cart
-      <span class="ml-1 badge badge-dark">{{ $cartAmount }}</span>
+      <span class="ml-1 badge badge-dark">{{ $cart::getCount() }}</span>
     </a>
   </div>
   <div class="bg-dark">
